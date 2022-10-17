@@ -6,13 +6,13 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/23 21:39:08 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/15 00:07:52 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/17 17:56:13 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 /**
- * @brief Parent function that houses does all the map validation
+ * @brief Parent function that houses all the map validating functions
  *
  * @param data pointer to data struct that houses everything I need
  */
@@ -122,8 +122,8 @@ int	count_and_check_valid_tiles(char **map)
  * is completable
  * @param data our big friend data struct ptr
  * @param map cop
- * @param x
- * @param y
+ * @param x the x
+ * @param y and y co-ords to check (make this the player function on first call)
  */
 void	flood_fill(t_data *data, char **map, int x, int y)
 {

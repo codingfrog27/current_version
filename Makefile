@@ -22,10 +22,11 @@ HEADER		:=	include/so_long.h
 LIBFT		:= LIBFT/libft.a
 
 $(NAME): $(OBJ_DIR) $(OBJS) $(SRCS) $(LIBFT)
-	$(CC) $(OBJS) $(CFLAGS) $(LINKFLAGS) $(LIBFT) $(INCLUDEFLAGS) -o $(NAME)
+	@$(CC) $(OBJS) $(CFLAGS) $(LINKFLAGS) $(LIBFT) $(INCLUDEFLAGS) -o $(NAME)
+	@printf "\033[0;33m So_long \033[0;32mCompiled \033[0m:)\n"
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER) | $(OBJ_DIR)
-	@$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDEFLAGS) && printf "Compiling: $(notdir $<)\n"
+	@$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDEFLAGS) && printf " \033[0;36mCompiling: $(notdir $<)\n\033[0m"
 
 
 all: $(NAME)
@@ -49,11 +50,9 @@ libft:
 
 clean:
 	$(RM) -rf $(OBJ_DIR)
-#	@$(MAKE) -C $(LIBMLX) clean
 
 fclean: clean
 	rm -f $(NAME)
-#	@$(MAKE) -C $(LIBMLX) fclean
 
 re: fclean all
 

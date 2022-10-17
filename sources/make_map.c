@@ -6,12 +6,19 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 14:40:26 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/14 20:13:00 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/17 19:48:15 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+/**
+ * @brief function that, if the input is valid parses
+ * the map to a 2d array
+ * @param argc
+ * @param argv
+ * @return char** the map in question
+ */
 char	**make_map(int argc, char **argv)
 {
 	char	**map;
@@ -61,6 +68,12 @@ char	*make_map_line(int fd)
 	return (map_line);
 }
 
+/**
+ * @brief reads the amount of newlines from the map string
+ * and allocates a ptr array of the right size for line_to_map
+ * @param map_line the map string
+ * @return char** the pointer array
+ */
 char	**alloc_map(char *map_line)
 {
 	int		lines_to_alloc;
@@ -84,6 +97,12 @@ char	**alloc_map(char *map_line)
 	return (map);
 }
 
+/**
+ * @brief sets a pointer to different parts of the map
+ *turning it into a 2d array without needing extra allocation
+ * @param map_line the map string
+ * @return char** the map
+ */
 char	**line_to_map(char *map_line)
 {
 	int		termpos;

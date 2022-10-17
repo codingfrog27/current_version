@@ -6,7 +6,7 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/19 21:12:21 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/15 00:07:52 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/17 19:50:41 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	init_data(t_data *data)
 {
 	data->mlx = NULL;
 	data->images[0] = NULL;
+	data->textures[0] = NULL;
+	data->step_text = NULL;
 	data->map = NULL;
 	data->collects_reachable = false;
 	data->exit_reachable = false;
@@ -86,6 +88,8 @@ void	end_game(t_data *data)
 		mlx_delete_image(data->mlx, data->images[i]);
 		i++;
 	}
+	if (data->step_text)
+		free(data->step_text);
 	free(data->map[0]);
 	free(data->map);
 	mlx_terminate(data->mlx);

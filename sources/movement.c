@@ -6,13 +6,19 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/19 21:13:44 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/15 00:43:59 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/17 19:53:28 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	movement_2_electric_boogaloo(mlx_key_data_t keydata, t_data *data)
+/**
+ * @brief MLX keyhook function that get's called on every keypress
+ * and moves are player when allowed
+ * @param keydata needed for mlx_is_key and also autogiven when using keyhook
+ * @param data our data struct ptr
+ */
+void	movement(mlx_key_data_t keydata, t_data *data)
 {
 	mlx_instance_t	*player;
 
@@ -34,9 +40,17 @@ void	movement_2_electric_boogaloo(mlx_key_data_t keydata, t_data *data)
 	(void)keydata;
 }
 
+/**
+ * @brief sees if player can move
+ *
+ * @param data ptr to our data struct
+ * @param x_direction modifier to the player position to see what tile to check
+ * @param y_direction modifier to the player position to see what tile to check
+ * @return true Move allowed!
+ * @return false  Can't move to designated tile
+ */
 bool	can_player_move(t_data *data, int x_direction, int y_direction)
 {
-	static int	steps;
 	const int	x = data->p_x + x_direction;
 	const int	y = data->p_y + y_direction;
 
@@ -46,7 +60,7 @@ bool	can_player_move(t_data *data, int x_direction, int y_direction)
 	{
 		if (data->collect_amount > 0)
 		{
-			mlx_put_string(data->mlx, "can i haz all the pizza? uwu", \
+			mlx_put_string(data->mlx, "more pizza plss", \
 			data->p_x * TILESIZE, data->p_y * TILESIZE + 50);
 			return (false);
 		}
@@ -56,12 +70,38 @@ bool	can_player_move(t_data *data, int x_direction, int y_direction)
 	data->p_y += y_direction;
 	if (data->map[y][x] == 'C')
 		hide_collectible(data, x, y);
-	steps++;
-	mlx_put_string(data->mlx, ft_itoa(steps), data->p_x * 64, data->p_y * 64);
-	ft_printf("\033[0;32m %i tiles Flown\n\033[0;m", steps);
+	place_move_nbr(data);
 	return (true);
 }
 
+/**
+ * @brief displayes the amount of moves the player has taken
+ * int the top right corner of the screen
+ * @param data
+ */
+void	place_move_nbr(t_data *data)
+{
+	static int	steps;
+	char		*move_str;
+
+	steps++;
+	if (data->step_text)
+		mlx_delete_image(data->mlx, data->step_text);
+	move_str = ft_itoa(steps);
+	if (!move_str)
+		error_exit("malloc fail");
+	data->step_text = mlx_put_string(data->mlx, move_str, 30, 20);
+	free(move_str);
+	ft_printf("\033[0;32m %i tiles Flown\n\033[0;m", steps);
+}
+
+/**
+ * @brief Looks for the collectible at our player pos
+ * and sets it to disabled
+ * @param data pointer to our data struct
+ * @param y_match y pos to look for
+ * @param x_match x pos to look for
+ */
 void	hide_collectible(t_data *data, int y_match, int x_match)
 {
 	int	y;

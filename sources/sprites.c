@@ -6,12 +6,17 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/19 21:14:45 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/14 20:37:00 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/17 18:47:10 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+/**
+ * @brief main sprite placing function that places tiles
+ *
+ * @param data main data struct ptr
+ */
 void	draw_sprites(t_data *data)
 {
 	int	i;
@@ -33,6 +38,11 @@ void	draw_sprites(t_data *data)
 	}
 }
 
+/**
+ * @brief
+ *
+ * @param data
+ */
 void	load_imgs(t_data *data)
 {
 	char			path[15];

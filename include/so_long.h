@@ -6,7 +6,7 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/19 16:34:39 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/15 00:07:41 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/17 19:53:42 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 typedef struct s_data {
 	mlx_t			*mlx;
 	mlx_image_t		*images[5];
+	mlx_image_t		*step_text;
 	mlx_texture_t	*textures[5];
 	char			**map;
 	int				map_height;
@@ -64,10 +65,10 @@ void	place_tile(t_data *data, char c, int x, int y);
 void	place_background(t_data *data);
 
 //movement
-void	player_movement(mlx_key_data_t keydata, t_data *data);
-void	movement_2_electric_boogaloo(mlx_key_data_t keydata, t_data *data);
+void	movement(mlx_key_data_t keydata, t_data *data);
 bool	can_player_move(t_data *data, int x_direction, int y_direction);
 void	hide_collectible(t_data *data, int y_match, int x_match);
+void	place_move_nbr(t_data *data);
 
 //utils
 void	error_exit(char *s);
