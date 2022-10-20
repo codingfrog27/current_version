@@ -6,7 +6,7 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/19 16:34:39 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/17 19:53:42 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/18 17:48:39 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	movement(mlx_key_data_t keydata, t_data *data);
 bool	can_player_move(t_data *data, int x_direction, int y_direction);
 void	hide_collectible(t_data *data, int y_match, int x_match);
 void	place_move_nbr(t_data *data);
+void	complete_msg(t_data *data);
 
 //utils
 void	error_exit(char *s);

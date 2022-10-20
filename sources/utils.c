@@ -6,7 +6,7 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/19 21:12:21 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/17 19:50:41 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/18 17:41:40 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void	end_game(t_data *data)
 		mlx_delete_image(data->mlx, data->images[i]);
 		i++;
 	}
-	if (data->step_text)
-		free(data->step_text);
+	// if (data->step_text)
+	// 	free(data->step_text);
 	free(data->map[0]);
 	free(data->map);
 	mlx_terminate(data->mlx);

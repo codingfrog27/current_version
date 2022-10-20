@@ -6,7 +6,7 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/19 21:13:44 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/17 19:53:28 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/18 17:37:04 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ bool	can_player_move(t_data *data, int x_direction, int y_direction)
 			data->p_x * TILESIZE, data->p_y * TILESIZE + 50);
 			return (false);
 		}
-		end_game(data);
+		complete_msg(data);
 	}
 	data->p_x += x_direction;
 	data->p_y += y_direction;
@@ -93,6 +93,16 @@ void	place_move_nbr(t_data *data)
 	data->step_text = mlx_put_string(data->mlx, move_str, 30, 20);
 	free(move_str);
 	ft_printf("\033[0;32m %i tiles Flown\n\033[0;m", steps);
+}
+
+void	complete_msg(t_data *data)
+{
+	mlx_texture_t	*texture;
+	mlx_image_t		*image;
+
+	texture = mlx_load_png("textures/victory.png");
+	image = mlx_texture_to_image(data->mlx, texture);
+	mlx_image_to_window(data->mlx, image, data->map_width / 2 * TILESIZE, data->map_height / 2 * TILESIZE);
 }
 
 /**
