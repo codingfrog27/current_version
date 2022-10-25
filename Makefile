@@ -37,7 +37,7 @@ debug: $(OBJ_DIR) $(OBJS) $(SRCS) $(LIBFT)
 lib: makemlx makelibft $(NAME)
 
 run: $(NAME)
-	./$(NAME) maps/map_0.ber
+	./$(NAME) maps/long.ber
 
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)

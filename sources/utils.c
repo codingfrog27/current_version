@@ -6,7 +6,7 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/19 21:12:21 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/18 17:41:40 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/25 21:05:44 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	init_data(t_data *data)
 	data->textures[0] = NULL;
 	data->step_text = NULL;
 	data->map = NULL;
+	data->map_copy = NULL;
 	data->collects_reachable = false;
 	data->exit_reachable = false;
 	data->collect_amount = 0;
@@ -88,10 +89,17 @@ void	end_game(t_data *data)
 		mlx_delete_image(data->mlx, data->images[i]);
 		i++;
 	}
+	i = 0;
 	// if (data->step_text)
 	// 	free(data->step_text);
 	free(data->map[0]);
 	free(data->map);
+	while (data->map_copy[i])
+	{
+		free(data->map_copy[i]);
+		i++;
+	}
+	free(data->map_copy);
 	mlx_terminate(data->mlx);
 	ft_printf("\033[0;35m Thank you for playing :) \n");
 	exit(0);

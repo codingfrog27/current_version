@@ -6,7 +6,7 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/19 21:13:44 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/18 17:37:04 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/25 21:06:51 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ bool	can_player_move(t_data *data, int x_direction, int y_direction)
 	data->p_x += x_direction;
 	data->p_y += y_direction;
 	if (data->map[y][x] == 'C')
-		hide_collectible(data, x, y);
+		hide_collectible(data, y, x);
 	place_move_nbr(data);
 	return (true);
 }
@@ -102,7 +102,8 @@ void	complete_msg(t_data *data)
 
 	texture = mlx_load_png("textures/victory.png");
 	image = mlx_texture_to_image(data->mlx, texture);
-	mlx_image_to_window(data->mlx, image, data->map_width / 2 * TILESIZE, data->map_height / 2 * TILESIZE);
+	mlx_image_to_window(data->mlx, image, data->map_width / 2 * TILESIZE, \
+	data->map_height / 2 * TILESIZE);
 }
 
 /**
@@ -114,24 +115,24 @@ void	complete_msg(t_data *data)
  */
 void	hide_collectible(t_data *data, int y_match, int x_match)
 {
-	int	y;
-	int	x;
-	int	index;
+	int			y;
+	int			x;
+	int			index;
 
 	x = 0;
 	y = 0;
 	index = -1;
-	while (data->map[y])
+	while (y < data->map_height)
 	{
-		while (data->map[y][x])
+		while (x < data->map_width)
 		{
-			if (data->map[y][x] == 'C')
+			if (data->map_copy[y][x] == 'C')
 				index++;
 			if (x == x_match && y == y_match)
 			{
 				ft_printf("\033[0;33mPizza time!\033[0;m\n");
-				data->map[y][x] = '0';
 				data->images[1]->instances[index].enabled = false;
+				data->map[y][x] = '0';
 				data->collect_amount--;
 			}
 			x++;

@@ -6,7 +6,7 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/19 21:14:45 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/17 18:47:10 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/25 21:06:11 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,24 @@
  */
 void	draw_sprites(t_data *data)
 {
-	int	i;
-	int	j;
+	int	y;
+	int	x;
 
-	i = 0;
-	j = 0;
+	y = 0;
+	x = 0;
 	load_imgs(data);
 	place_background(data);
-	while (data->map[i])
+	while (data->map[y])
 	{
-		while (data->map[i][j])
+		while (data->map[y][x])
 		{
-			place_tile(data, data->map[i][j], j * TILESIZE, i * TILESIZE);
-			j++;
+			place_tile(data, data->map[y][x], x * TILESIZE, y * TILESIZE);
+			x++;
 		}
-		i++;
-		j = 0;
+		y++;
+		x = 0;
 	}
+	data->map_copy = map_copy(data);
 }
 
 /**

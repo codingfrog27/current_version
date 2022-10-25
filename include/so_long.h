@@ -6,7 +6,7 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/19 16:34:39 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/18 17:48:39 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/25 21:03:02 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_data {
 	mlx_image_t		*step_text;
 	mlx_texture_t	*textures[5];
 	char			**map;
+	char			**map_copy;
 	int				map_height;
 	int				map_width;
 	int				collect_amount;
