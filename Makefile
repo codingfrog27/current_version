@@ -34,16 +34,16 @@ all: $(NAME)
 debug: $(OBJ_DIR) $(OBJS) $(SRCS) $(LIBFT)
 	$(CC) $(OBJS) -ggdb3 $(LINKFLAGS) $(LIBFT) $(INCLUDEFLAGS) -o $(NAME)
 
-lib: makemlx makelibft $(NAME)
-
-run: $(NAME)
-	./$(NAME) maps/long.ber
+run: $(NAME) $(OBJS) $(SRCS)
+	./$(NAME) maps/map_long.ber
+	./$(NAME) maps/map_0.ber
 
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
 
 mlx:
-	@make -C MLX42/
+	git clone https://github.com/codam-coding-college/MLX42.git
+	make -C MLX42/
 
 libft:
 	@make -C LIBFT/

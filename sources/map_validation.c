@@ -6,61 +6,16 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/23 21:39:08 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/17 17:56:13 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/26 20:59:34 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-/**
- * @brief Parent function that houses all the map validating functions
- *
- * @param data pointer to data struct that houses everything I need
- */
 
-void	map_validation(t_data *data)
-{
-	char	**map;
-
-	ft_print_map(data->map);
-	is_map_walled_off_and_rectangluar(data);
-	data->collect_amount = (count_and_check_valid_tiles(data->map));
-	find_player_pos(data);
-	map = map_copy(data);
-	flood_fill(data, map, data->p_x, data->p_y);
-	if (!data->exit_reachable || !data->collects_reachable)
-		error_exit("wow I can't even complete this map, what a scam");
-	free_map(map);
-	ft_printf("\033[0;33m\nPARSING COMPLETE\033[0m\n");
-}
-
-/**
- * @brief checks if the edges off the map are walled off
- * and wether all the lines are equally long
- * @param data our good old friend big fuckoff data struct
- */
-void	is_map_walled_off_and_rectangluar(t_data *data)
-{
-	int	i;
-	int	len;
-
-	data->map_width = top_bottom_check(data->map[0]);
-	i = 1;
-	while (data->map[i + 1])
-	{
-		len = ft_strlen(data->map[i]);
-		if (len != data->map_width)
-			error_exit("I guess you were there\
-			 cause this map is not a square!");
-		if (data->map[i][0] != '1' || data->map[i][len - 1] != '1')
-			error_exit("No proper wall's my man");
-		i++;
-	}
-	top_bottom_check(data->map[i]);
-	if ((int)ft_strlen(data->map[i]) != len)
-		error_exit("Guess you'll have to go on grindr because \
-		this Bottom (wall) is invalid!");
-	data->map_height = i + 1;
-}
+#define BOT_WALL_ERROR "Guess you'll have to go on grindr because \
+this Bottom (wall) is invalid!"
+#define MAP_NOT_SQUARE_ERROR "I guess you were there\
+cause this map is not a square!"
 
 /**
  * @brief small function to check wether a string only contains 1
@@ -69,7 +24,7 @@ void	is_map_walled_off_and_rectangluar(t_data *data)
  * @param str the map of the line
  * @return the line len
  */
-int	top_bottom_check(char *str)
+static int	top_bottom_check(char *str)
 {
 	int	i;
 
@@ -91,7 +46,7 @@ int	top_bottom_check(char *str)
  * @param map
  * @return The amount of collectibles
  */
-int	count_and_check_valid_tiles(char **map)
+static int	count_and_check_valid_tiles(char **map)
 {
 	int			y;
 	int			x;
@@ -125,7 +80,7 @@ int	count_and_check_valid_tiles(char **map)
  * @param x the x
  * @param y and y co-ords to check (make this the player function on first call)
  */
-void	flood_fill(t_data *data, char **map, int x, int y)
+static void	flood_fill(t_data *data, char **map, int x, int y)
 {
 	static int	collects;
 
@@ -147,4 +102,55 @@ void	flood_fill(t_data *data, char **map, int x, int y)
 	flood_fill(data, map, x - 1, y);
 	flood_fill(data, map, x, y + 1);
 	flood_fill(data, map, x, y - 1);
+}
+
+/**
+ * @brief checks if the edges off the map are walled off
+ * and wether all the lines are equally long
+ * @param data our good old friend big fuckoff data struct
+ */
+static void	is_map_walled_off_and_rectangluar(t_data *data)
+{
+	int	i;
+	int	len;
+
+	data->map_width = top_bottom_check(data->map[0]);
+	i = 1;
+	while (data->map[i + 1])
+	{
+		len = ft_strlen(data->map[i]);
+		if (len != data->map_width)
+		{
+			printf("len: %d\n", len);
+			error_exit(MAP_NOT_SQUARE_ERROR);
+		}
+		if (data->map[i][0] != '1' || data->map[i][len - 1] != '1')
+			error_exit("No proper wall's my man");
+		i++;
+	}
+	top_bottom_check(data->map[i]);
+	if ((int)ft_strlen(data->map[i]) != len)
+		error_exit(BOT_WALL_ERROR);
+	data->map_height = i + 1;
+}
+
+/**
+ * @brief Parent function that houses all the map validating functions
+ *
+ * @param data pointer to data struct that houses everything I need
+ */
+void	map_validation(t_data *data)
+{
+	char	**map;
+
+	ft_print_map(data->map);
+	is_map_walled_off_and_rectangluar(data);
+	data->collect_amount = (count_and_check_valid_tiles(data->map));
+	find_player_pos(data);
+	map = copy_map(data);
+	flood_fill(data, map, data->player_x, data->player_y);
+	if (!data->exit_reachable || !data->collects_reachable)
+		error_exit("wow I can't even complete this map, what a scam");
+	free_map(map);
+	ft_printf("\033[0;33m\nPARSING COMPLETE\033[0m\n");
 }

@@ -6,7 +6,7 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/19 21:13:44 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/25 21:06:51 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/26 18:34:27 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	movement(mlx_key_data_t keydata, t_data *data)
  */
 bool	can_player_move(t_data *data, int x_direction, int y_direction)
 {
-	const int	x = data->p_x + x_direction;
-	const int	y = data->p_y + y_direction;
+	const int	x = data->player_x + x_direction;
+	const int	y = data->player_y + y_direction;
 
 	if (data->map[y][x] == '1')
 		return (false);
@@ -61,17 +61,28 @@ bool	can_player_move(t_data *data, int x_direction, int y_direction)
 		if (data->collect_amount > 0)
 		{
 			mlx_put_string(data->mlx, "more pizza plss", \
-			data->p_x * TILESIZE, data->p_y * TILESIZE + 50);
+			data->player_x * TILESIZE, data->player_y * TILESIZE + 50);
 			return (false);
 		}
 		complete_msg(data);
 	}
-	data->p_x += x_direction;
-	data->p_y += y_direction;
+	data->player_x += x_direction;
+	data->player_y += y_direction;
 	if (data->map[y][x] == 'C')
 		hide_collectible(data, y, x);
 	place_move_nbr(data);
 	return (true);
+}
+
+void	complete_msg(t_data *data)
+{
+	mlx_texture_t	*texture;
+	mlx_image_t		*image;
+
+	texture = mlx_load_png("textures/victory.png");
+	image = mlx_texture_to_image(data->mlx, texture);
+	mlx_image_to_window(data->mlx, image, data->map_width / 2 * TILESIZE, \
+	data->map_height / 2 * TILESIZE);
 }
 
 /**
@@ -93,17 +104,6 @@ void	place_move_nbr(t_data *data)
 	data->step_text = mlx_put_string(data->mlx, move_str, 30, 20);
 	free(move_str);
 	ft_printf("\033[0;32m %i tiles Flown\n\033[0;m", steps);
-}
-
-void	complete_msg(t_data *data)
-{
-	mlx_texture_t	*texture;
-	mlx_image_t		*image;
-
-	texture = mlx_load_png("textures/victory.png");
-	image = mlx_texture_to_image(data->mlx, texture);
-	mlx_image_to_window(data->mlx, image, data->map_width / 2 * TILESIZE, \
-	data->map_height / 2 * TILESIZE);
 }
 
 /**

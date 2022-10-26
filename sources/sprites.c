@@ -6,45 +6,13 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/19 21:14:45 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/25 21:06:11 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/26 21:03:24 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/**
- * @brief main sprite placing function that places tiles
- *
- * @param data main data struct ptr
- */
-void	draw_sprites(t_data *data)
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	x = 0;
-	load_imgs(data);
-	place_background(data);
-	while (data->map[y])
-	{
-		while (data->map[y][x])
-		{
-			place_tile(data, data->map[y][x], x * TILESIZE, y * TILESIZE);
-			x++;
-		}
-		y++;
-		x = 0;
-	}
-	data->map_copy = map_copy(data);
-}
-
-/**
- * @brief
- *
- * @param data
- */
-void	load_imgs(t_data *data)
+static void	load_imgs(t_data *data)
 {
 	char			path[15];
 	int				i;
@@ -62,7 +30,7 @@ void	load_imgs(t_data *data)
 	}
 }
 
-void	place_tile(t_data *data, char c, int x, int y)
+static void	place_tile(t_data *data, char c, int x, int y)
 {
 	char	*tiles;
 	int		i;
@@ -93,6 +61,32 @@ void	place_background(t_data *data)
 			data->bg_tiles_nb++;
 		}
 		y += TILESIZE;
+		x = 0;
+	}
+}
+
+/**
+ * @brief main sprite placing function that both loads all the textures and imgs
+ * and places them on the correct places in the screen
+ * @param data main data struct ptr
+ */
+void	draw_sprites(t_data *data)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	x = 0;
+	load_imgs(data);
+	place_background(data);
+	while (data->map[y])
+	{
+		while (data->map[y][x])
+		{
+			place_tile(data, data->map[y][x], x * TILESIZE, y * TILESIZE);
+			x++;
+		}
+		y++;
 		x = 0;
 	}
 }

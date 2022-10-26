@@ -6,7 +6,7 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/19 21:12:21 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/25 21:05:44 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/26 18:31:54 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	error_exit(char *s)
 {
-	ft_printf("\033[0;31mERROR\n %s", s);
+	ft_printf("\033[0;31mERROR\n %s\n", s);
 	exit(0);
 }
 
@@ -31,8 +31,8 @@ void	find_player_pos(t_data *data)
 		{
 			if (data->map[y][x] == 'P')
 			{
-				data->p_x = x;
-				data->p_y = y;
+				data->player_x = x;
+				data->player_y = y;
 				return ;
 			}
 			x++;
@@ -42,7 +42,7 @@ void	find_player_pos(t_data *data)
 	}
 }
 
-char	**map_copy(t_data	*data)
+char	**copy_map(t_data	*data)
 {
 	int		i;
 	char	**new_map;
@@ -73,8 +73,8 @@ void	init_data(t_data *data)
 	data->collect_amount = 0;
 	data->map_height = 0;
 	data->map_width = 0;
-	data->p_x = 0;
-	data->p_y = 0;
+	data->player_x = 0;
+	data->player_y = 0;
 	data->bg_tiles_nb = 0;
 }
 
@@ -90,8 +90,8 @@ void	end_game(t_data *data)
 		i++;
 	}
 	i = 0;
-	// if (data->step_text)
-	// 	free(data->step_text);
+	if (data->step_text)
+		mlx_delete_image(data->mlx, data->step_text);
 	free(data->map[0]);
 	free(data->map);
 	while (data->map_copy[i])
@@ -100,6 +100,7 @@ void	end_game(t_data *data)
 		i++;
 	}
 	free(data->map_copy);
+	mlx_close_window(data->mlx);
 	mlx_terminate(data->mlx);
 	ft_printf("\033[0;35m Thank you for playing :) \n");
 	exit(0);

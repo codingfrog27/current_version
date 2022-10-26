@@ -6,7 +6,7 @@
 /*   By: mde-cloe <mde-cloe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/19 16:34:14 by mde-cloe      #+#    #+#                 */
-/*   Updated: 2022/10/17 19:53:28 by mde-cloe      ########   odam.nl         */
+/*   Updated: 2022/10/26 18:31:14 by mde-cloe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int32_t	main(int argc, char **argv)
 	init_data(&data);
 	data.map = make_map(argc, argv);
 	map_validation(&data);
+	data.map_copy = copy_map(&data);
 	data.mlx = mlx_init((data.map_width * TILESIZE), \
-	(data.map_height * TILESIZE), "froggy_game", true);
+	(data.map_height * TILESIZE), "froggy_game", false);
 	draw_sprites(&data);
 	mlx_key_hook(data.mlx, (mlx_keyfunc)movement, &data);
 	mlx_loop(data.mlx);
 	end_game(&data);
-	mlx_terminate(data.mlx);
 	return (0);
 }
