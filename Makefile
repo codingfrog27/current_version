@@ -35,8 +35,8 @@ debug: $(OBJ_DIR) $(OBJS) $(SRCS) $(LIBFT)
 	$(CC) $(OBJS) -ggdb3 $(LINKFLAGS) $(LIBFT) $(INCLUDEFLAGS) -o $(NAME)
 
 run: $(NAME) $(OBJS) $(SRCS)
-	./$(NAME) maps/map_long.ber
 	./$(NAME) maps/map_0.ber
+	./$(NAME) maps/map_long.ber
 
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
