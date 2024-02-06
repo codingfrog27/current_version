@@ -30,11 +30,11 @@ static int	top_bottom_check(char *str)
 
 	i = 0;
 	if (!str)
-		error_exit("empty string???\n");
+		so_long_error_exit("empty string???\n");
 	while (str[i])
 	{
 		if (str[i] != '1')
-			error_exit("get your top and bottom (walls) sorted ;)");
+			so_long_error_exit("get your top and bottom (walls) sorted ;)");
 		i++;
 	}
 	return (i);
@@ -60,7 +60,7 @@ static int	count_and_check_valid_tiles(char **map)
 		while (map[y][x])
 		{
 			if (map[y][x] > 127 || map[y][x] < 0 || table[(int)map[y][x]] < 1)
-				error_exit("The map has an invalid Char, go wait in the car!");
+				so_long_error_exit("Map has invalid Char, go wait in the car!");
 			table[(int)map[y][x]]++;
 			x++;
 		}
@@ -68,7 +68,7 @@ static int	count_and_check_valid_tiles(char **map)
 		x = 0;
 	}
 	if (table['E'] != 2 || table['P'] != 2 || table['C'] < 2)
-		error_exit("wrong amount of exit/player/collectibles sussy baka!");
+		so_long_error_exit("wrong amount of symbols sussy baka!");
 	return (table['C'] - 1);
 }
 
@@ -122,15 +122,15 @@ static void	is_map_walled_off_and_rectangluar(t_data *data)
 		if (len != data->map_width)
 		{
 			printf("len: %d\n", len);
-			error_exit(MAP_NOT_SQUARE_ERROR);
+			so_long_error_exit(MAP_NOT_SQUARE_ERROR);
 		}
 		if (data->map[i][0] != '1' || data->map[i][len - 1] != '1')
-			error_exit("No proper wall's my man");
+			so_long_error_exit("No proper wall's my man");
 		i++;
 	}
 	top_bottom_check(data->map[i]);
 	if ((int)ft_strlen(data->map[i]) != len)
-		error_exit(BOT_WALL_ERROR);
+		so_long_error_exit(BOT_WALL_ERROR);
 	data->map_height = i + 1;
 }
 
@@ -143,14 +143,14 @@ void	map_validation(t_data *data)
 {
 	char	**map;
 
-	ft_print_map(data->map);
+	// ft_print_map(data->map);
 	is_map_walled_off_and_rectangluar(data);
 	data->collect_amount = (count_and_check_valid_tiles(data->map));
 	find_player_pos(data);
 	map = copy_map(data);
 	flood_fill(data, map, data->player_x, data->player_y);
 	if (!data->exit_reachable || !data->collects_reachable)
-		error_exit("wow I can't even complete this map, what a scam");
+		so_long_error_exit("wow I can't even complete this map, what a scam");
 	free_map(map);
 	ft_printf("\033[0;33m\nPARSING COMPLETE\033[0m\n");
 }

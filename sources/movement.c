@@ -60,7 +60,7 @@ bool	can_player_move(t_data *data, int x_direction, int y_direction)
 	{
 		if (data->collect_amount > 0)
 		{
-			mlx_put_string(data->mlx, "more pizza plss", \
+			mlx_put_string(data->mlx, "more pizza pls", \
 			data->player_x * TILESIZE, data->player_y * TILESIZE + 50);
 			return (false);
 		}
@@ -100,7 +100,7 @@ void	place_move_nbr(t_data *data)
 		mlx_delete_image(data->mlx, data->step_text);
 	move_str = ft_itoa(steps);
 	if (!move_str)
-		error_exit("malloc fail");
+		so_long_error_exit("malloc fail");
 	data->step_text = mlx_put_string(data->mlx, move_str, 30, 20);
 	free(move_str);
 	ft_printf("\033[0;32m %i tiles Flown\n\033[0;m", steps);

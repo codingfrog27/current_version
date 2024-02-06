@@ -21,7 +21,7 @@ int32_t	main(int argc, char **argv)
 	map_validation(&data);
 	data.map_copy = copy_map(&data);
 	data.mlx = mlx_init((data.map_width * TILESIZE), \
-	(data.map_height * TILESIZE), "froggy_game", false);
+	(data.map_height * TILESIZE), "froggy_game", true);
 	draw_sprites(&data);
 	mlx_key_hook(data.mlx, (mlx_keyfunc)movement, &data);
 	mlx_loop(data.mlx);

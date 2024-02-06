@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void	error_exit(char *s)
+void	so_long_error_exit(char *s)
 {
 	ft_printf("\033[0;31mERROR\n %s\n", s);
 	exit(0);
@@ -50,7 +50,7 @@ char	**copy_map(t_data	*data)
 	i = 0;
 	new_map = (char **)malloc(sizeof(char *) * (data->map_height + 1));
 	if (!new_map)
-		error_exit("Malloc fail GO TO JAIL");
+		so_long_error_exit("Malloc fail GO TO JAIL");
 	while (data->map[i])
 	{
 		new_map[i] = ft_strdup(data->map[i]);

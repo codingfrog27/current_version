@@ -28,7 +28,8 @@
 # define PLAYER 3
 # define BACKGROUND 4
 
-typedef struct s_data {
+typedef struct s_data
+{
 	mlx_t			*mlx;
 	mlx_image_t		*images[5];
 	mlx_image_t		*step_text;
@@ -62,7 +63,7 @@ void	place_move_nbr(t_data *data);
 void	complete_msg(t_data *data);
 
 //utils
-void	error_exit(char *s);
+void	so_long_error_exit(char *s);
 void	find_player_pos(t_data *data);
 char	**copy_map(t_data	*data);
 void	free_map(char **map);

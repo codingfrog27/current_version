@@ -31,7 +31,7 @@ static char	*make_map_line(int fd)
 	{
 		read_ret = read(fd, buff, 4096);
 		if (read_ret == -1)
-			error_exit("can't read this file uwu");
+			so_long_error_exit("can't read this file uwu");
 		buff[read_ret] = '\0';
 		tmp = map_line;
 		map_line = ft_strjoin(map_line, buff);
@@ -115,12 +115,12 @@ char	**make_map(int argc, char **argv)
 	int		fd;
 
 	if (argc != 2)
-		error_exit("Wrong number of arguments silly!");
+		so_long_error_exit("Wrong number of arguments silly!");
 	if (ft_strlen(argv[1]) < 5 || !ft_strrcmp(argv[1], ".ber", 4))
-		error_exit("not a proper .ber file!");
+		so_long_error_exit("not a proper .ber file!");
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		error_exit("open failed :(");
+		so_long_error_exit("open failed :(");
 	line = make_map_line(fd);
 	map = line_to_map(line);
 	return (map);
